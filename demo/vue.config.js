@@ -21,5 +21,7 @@ module.exports = {
         }
       }
     }
-  }
+  },
+
+  lintOnSave: false
 }

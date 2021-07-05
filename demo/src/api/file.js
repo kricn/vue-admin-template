@@ -7,3 +7,11 @@ export function uploadBigFile (data) {
     data
   })
 }
+
+export function mergeBigFile(params) {
+  return HTTP.request({
+    url: '/file/merge',
+    method: 'GET',
+    params
+  })
+}
