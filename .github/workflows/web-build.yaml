@@ -1,0 +1,23 @@
+name: vue online build CI
+on:
+  push: 
+    branches: 
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  build-and-deploy-vue:
+    name: Build and deploy of vue
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      # - name: Make executeable
+      #   run: chmod +x ./main.sh
+        
+      - name: Build from shell
+        run: |
+          yarn install |
+          yarn build
