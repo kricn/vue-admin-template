@@ -19,5 +19,6 @@ jobs:
         
       - name: Build from shell
         run: |
+          cd demo |
           yarn install |
           yarn build
