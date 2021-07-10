@@ -36,7 +36,4 @@ jobs:
         key: ${{ secrets.ACCESS_TOKEN }}
         port: ${{ secrets.REMOTE_PORT }}
         script: |
-          ls
-          cd /www/wwwroot/all/serve/vue
-          npm install
-          pm2 start index.js
+          sh ${{ secrets.SERVER_TARGET }}/deploy.sh
