@@ -8,7 +8,7 @@ const mysql = require('./config/mysql')
     router(app),
     mysql(app)
   ])
-  app.listen(10086, () => {
-    console.log('server is listing on 10086...')
+  app.listen(8001, () => {
+    console.log('server is listing on 8001...')
   })
 })()

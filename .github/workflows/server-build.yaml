@@ -37,6 +37,6 @@ jobs:
         port: ${{ secrets.REMOTE_PORT }}
         script: |
           ls
-          cd ${{ secrets.SERVER_TARGET }}
+          cd /www/wwwroot/all/serve/vue
           npm install
           pm2 start index.js
