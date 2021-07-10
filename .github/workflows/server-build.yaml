@@ -17,21 +17,16 @@ jobs:
     - name: Checkout  # 步骤名称
       uses: actions/checkout@master # 使用别人包装好的步骤镜像
 
-    - name: Deploy file to Server
-      uses: wlixcc/SFTP-Deploy-Action@v1.0
-      with:  
-        # username: ${{ secrets.REMOTE_USER }} # 引用配置，用户名称
-        # server: ${{ secrets.REMOTE_HOST }} # 引用配置，服务器 IP
-        # ssh_private_key: ${{ secrets.ACCESS_TOKEN }} # 引用配置，SSH 私钥
-        # port: ${{ secrets.REMOTE_PORT }}
-        # local_path: './server/*' 
-        # remote_path: '/www/wwwroot/all/serve/vue'
-        username: 'root' # 引用配置，用户名称
-        server: 'bamnyt.com' # 引用配置，服务器 IP
-        ssh_private_key: ${{ secrets.ACCESS_TOKEN }} # 引用配置，SSH 私钥
-        port: '10000'
-        local_path: './server/*' 
-        remote_path: '/www/wwwroot/all/serve/vue'
+    - name: Deploy
+        uses: easingthemes/ssh-deploy@v2.1.5
+        env:
+          SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
+          ARGS: "-avz --delete"
+          SOURCE: "./server/"
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
+          TARGET: ${{ secrets.SERVER_TARGET }}
 
     - name: Server Start    
       uses: appleboy/ssh-action@master
@@ -41,5 +36,7 @@ jobs:
         key: ${{ secrets.ACCESS_TOKEN }}
         port: ${{ secrets.REMOTE_PORT }}
         script: |
+          ls
+          cd ${{ secrets.SERVER_TARGET }}
           npm install
           pm2 start index.js
