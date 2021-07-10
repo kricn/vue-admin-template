@@ -20,12 +20,18 @@ jobs:
     - name: Deploy file to Server
       uses: wlixcc/SFTP-Deploy-Action@v1.0
       with:  
-        username: ${{ secrets.REMOTE_USER }} # 引用配置，用户名称
-        server: ${{ secrets.REMOTE_HOST }} # 引用配置，服务器 IP
+        # username: ${{ secrets.REMOTE_USER }} # 引用配置，用户名称
+        # server: ${{ secrets.REMOTE_HOST }} # 引用配置，服务器 IP
+        # ssh_private_key: ${{ secrets.ACCESS_TOKEN }} # 引用配置，SSH 私钥
+        # port: ${{ secrets.REMOTE_PORT }}
+        # local_path: './server/*' 
+        # remote_path: '/www/wwwroot/all/serve/vue'
+        username: 'root' # 引用配置，用户名称
+        server: 'bamnyt.com' # 引用配置，服务器 IP
         ssh_private_key: ${{ secrets.ACCESS_TOKEN }} # 引用配置，SSH 私钥
-        port: ${{ secrets.REMOTE_PORT }}
+        port: '10000'
         local_path: './server/*' 
-        remote_path: '/www/wwwroot/all/serve/vue/'
+        remote_path: '/www/wwwroot/all/serve/vue'
 
     - name: Server Start    
       uses: appleboy/ssh-action@master
