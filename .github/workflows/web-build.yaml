@@ -27,11 +27,11 @@ jobs:
           SSH_PRIVATE_KEY: ${{ secrets.ACCESS_TOKEN }}
           ARGS: "-avz --delete"
           SOURCE: "dist/"
-          # REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
-          # REMOTE_USER: ${{ secrets.REMOTE_USER }}
-          # REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
-          # TARGET: ${{ secrets.TARGET }}
-          REMOTE_HOST: bamnyt.com
-          REMOTE_USER: root
-          REMOTE_PORT: 1000
-          TARGET: /www/wwwroot/all/web/vue/
+          REMOTE_HOST: ${{ secrets.REMOTE_HOST }}
+          REMOTE_USER: ${{ secrets.REMOTE_USER }}
+          REMOTE_PORT: ${{ secrets.REMOTE_PORT }}
+          TARGET: ${{ secrets.TARGET }}
+          # REMOTE_HOST: bamnyt.com
+          # REMOTE_USER: root
+          # REMOTE_PORT: 1000
+          # TARGET: /www/wwwroot/all/web/vue/
