@@ -16,21 +16,23 @@ jobs:
     steps: # 自动化步骤
     - name: Checkout  # 步骤名称
       uses: actions/checkout@master # 使用别人包装好的步骤镜像
+
     - name: Deploy file to Server
       uses: wlixcc/SFTP-Deploy-Action@v1.0
       with:  
         username: ${{ secrets.REMOTE_USER }} # 引用配置，用户名称
         server: ${{ secrets.REMOTE_HOST }} # 引用配置，服务器 IP
-        ssh_private_key: ${{ secrets.SSH_PRIVATE_KEY }} # 引用配置，SSH 私钥
+        ssh_private_key: ${{ secrets.ACCESS_TOKEN }} # 引用配置，SSH 私钥
         port: ${{ secrets.REMOTE_PORT }}
         local_path: './server/*' 
         remote_path: ${{ secrets.SERVER_TARGET }}
+
     - name: Server Start    
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.REMOTE_HOST }}
         username: ${{ secrets.REMOTE_USER }}
-        key: ${{ secrets.SSH_PRIVATE_KEY }}
+        key: ${{ secrets.ACCESS_TOKEN }}
         port: ${{ secrets.REMOTE_PORT }}
         script: |
           npm install
