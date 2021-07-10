@@ -13,10 +13,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-
       # - name: Make executeable
       #   run: chmod +x ./main.sh
-        
       - name: Build
         run: |
           cd demo
