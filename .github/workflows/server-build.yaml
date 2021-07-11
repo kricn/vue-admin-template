@@ -37,6 +37,5 @@ jobs:
         port: ${{ secrets.REMOTE_PORT }}
         script: |
           cd ${{ secrets.SERVER_TARGET }}
-          ls
           npm install
           pm2 start index.js
