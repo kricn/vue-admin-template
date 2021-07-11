@@ -36,4 +36,6 @@ jobs:
         key: ${{ secrets.ACCESS_TOKEN }}
         port: ${{ secrets.REMOTE_PORT }}
         script: |
-          sh ${{ secrets.SERVER_TARGET }}/deploy.sh
+          cd ${{ secrets.SERVER_TARGET }}
+          npm install
+          pm2 start index.js
