@@ -36,4 +36,4 @@ jobs:
         key: ${{ secrets.ACCESS_TOKEN }}
         port: ${{ secrets.REMOTE_PORT }}
         script: |
-          node -v
+          sh ${{ secrets.SERVER_TARGET }}/deploy.sh
