@@ -38,4 +38,5 @@ jobs:
         script: |
           cd ${{ secrets.SERVER_TARGET }}
           npm install
-          pm2 start index.js
+          pm2 delete vue
+          pm2 start index.js --name vue
