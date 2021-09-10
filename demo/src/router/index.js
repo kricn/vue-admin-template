@@ -1,19 +1,28 @@
-import { createRouter, createWebHistory } from 'vue-router'
+import {
+  createRouter,
+  createWebHistory
+} from 'vue-router'
+import menu from './menu'
 
 const routes = [
   {
     path: '/',
-    component: () => import('@/pages/Home.vue')
+    name: 'Layout',
+    meta: {
+      noShow: true
+    },
+    component: () => import('@/layout'),
+    children: menu
   },
-  {
-    path: '/file-upload',
-    component: () => import('@/pages/FileUpload')
-  }
 ]
 
 const router = createRouter({
   history: createWebHistory(),
   routes
 })
+
+export {
+  routes
+}
 
 export default router;

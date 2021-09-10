@@ -25,19 +25,11 @@
   </div>
 </template>
 <script>
-import { reactive, ref, watch } from 'vue'
+import { reactive, ref } from 'vue'
 import {
   uploadBigFile,
   mergeBigFile
 } from '@/api/file.js'
-
-function asyncPool(pool) {
-
-  const copyPool = pool.slice()
-  const running = []
-  const finished = []
-
-}
 
 export default {
   name: 'FileUpload',
