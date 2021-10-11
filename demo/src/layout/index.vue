@@ -1,36 +1,41 @@
 <template>
-  <div>
-    <template v-for="item in renderRouteLists" :key="item.path">
-      <router-link :to="{path: item.path}">{{item.meta.title}}</router-link>
-    </template>
-    <router-view />
+  <div class="container">
+    <div class="header">
+      <span class="back" @click="handleBack">返回</span>
+    </div>
+    <div class="main">
+      <router-view />
+    </div>
   </div>
 </template>
 <script>
-import { ref } from 'vue'
-import routes from '@/router/menu'
+import { useRouter } from 'vue-router'
 export default {
   name: 'Layout',
   setup() {
-    let renderRouteLists = ref([])
-    const filterRoute = (routes) => {
-      return routes.filter(item => {
-        if (item.children && item.children.length > 0) {
-          item.children = filterRoute(item.children)
-        }
-        return !item.meta || (item.meta && !item.meta.noShow)
-      })
+    const router = useRouter()
+    const handleBack = () => {
+      router.go(-1)
     }
-    renderRouteLists = filterRoute(routes)
-    console.log(renderRouteLists)
+
     return {
-      renderRouteLists
+      handleBack
     }
-  }
+  },
 }
 </script>
 <style lang="scss" scoped>
-a {
-  padding: 10px 12px;
+.container {
+  .header {
+    padding: 0 20px;
+    border-bottom: 1px solid #aaa;
+    .back {
+      line-height: 40px;
+      cursor: pointer;
+    }
+  }
+  .main {
+    padding: 0 20px;
+  }
 }
 </style>

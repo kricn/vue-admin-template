@@ -1,9 +1,28 @@
 html, body {
   height: 100%;
   width: 100%;
-  background-color: #ededed;
+  background-color: #eee;
+}
+
+#app {
+  width: 100%;
+  height: 100%;
 }
 
 * {
   box-sizing: border-box;
+}
+
+.flex {
+  display: flex;
+  flex-wrap: wrap;
+}
+.fnorap {
+  flex-wrap: nowrap;
+}
+.fbetween {
+  justify-content: space-between;
+}
+.fvertical {
+  align-content: center;
 }
