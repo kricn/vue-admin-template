@@ -1,10 +1,11 @@
 import {
   createRouter,
-  createWebHistory
+  createWebHistory,
+  RouteRecordRaw
 } from 'vue-router'
 import menu from './menu'
 
-const routes = [
+const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Layout',
@@ -12,13 +13,18 @@ const routes = [
     meta: {
       noShow: true
     },
-    component: () => import('@/layout'),
+    component: () => import('@/layout/index.vue'),
     children: menu
   },
   {
     path: '/home',
     name: 'Home',
-    component: () => import('@/pages')
+    component: () => import('@/pages/index.vue')
+  },
+  {
+    path: '/test',
+    name: 'Test',
+    component: () => import('@/pages/test/index.vue')
   }
 ]
 
