@@ -1,20 +1,20 @@
 <template>
   <div class="test-search">
-    <a-input v-model="inputValue" />
-    <a-button type="primary" @click="search">搜索</a-button>
+    <div class="input-wrapper">
+      <input class="search-input" v-model:value="inputValue" />
+      <button type="primary" @click="search">搜索</button>
+    </div>
+    
   </div>
 </template>
 <script lang="ts">
 import { defineComponent, ref, watch } from 'vue'
 export default defineComponent({
-  props: {
-    value: {
-      type: String,
-      default: ''
-    }
-  },
   emits: {
     'update:value': (val: String):String => {
+      return val
+    },
+    'search': (val: String):String => {
       return val
     }
   },
@@ -26,8 +26,8 @@ export default defineComponent({
     watch(inputValue, newVal => {
       context.emit('update:value', newVal)
     })
-    const search = () => {
-
+    const search = ():void => {
+      context.emit('search', inputValue.value)
     }
     return {
       inputValue,
@@ -38,6 +38,13 @@ export default defineComponent({
 </script>
 <style lang="scss" scoped>
 .test-search {
-  display: flex;
+  padding: 10px;
+  .input-wrapper {
+    display: flex;
+    .search-input {
+      width: 60%; 
+      margin-right: 12px;
+    }
+  }
 }
 </style>
