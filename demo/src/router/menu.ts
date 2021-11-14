@@ -5,7 +5,7 @@ const menu = [
     meta: {
       title: '大文件上传'
     },
-    component: () => import('@/pages/FileUpload')
+    component: () => import('@/pages/FileUpload/index.vue')
   }
 ]
 
