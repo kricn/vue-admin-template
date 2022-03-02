@@ -3,6 +3,7 @@
     <input class="file_trigger" type="file" ref="fileTrigger" @change="handleFileChange" />
     <div class="file_field">
       <a-button @click="handleSelectFile">{{ filename ? '重新选择文件' : '请选择文件'}}</a-button>
+      <a-button type="ghost" @click="cleanFile" v-if="filename">清空</a-button>
       <div v-if="filename">
         已选文件：{{ filename }}
       </div>
@@ -69,8 +70,11 @@ export default {
     // 选择文件
     const handleFileChange = (e: Event) => {
       const element = e.target as HTMLInputElement
-      file.value = (element.files as FileList)[0]
-      if (!file.value) return ;
+      const tempFile: File | null = (element.files as FileList)[0]
+      if (!tempFile) return ;
+      resetFile()
+      isUploaded.value = false
+      file.value = tempFile
       // hash 生成
       hash.value = 'abcdef'
       filename.value = file.value?.name
@@ -109,6 +113,7 @@ export default {
 
     // 开始上传
     const handleUpload = () => {
+      if (!file.value) return ;
       isUploaded.value = true
       // 复制一份任务队列
       const tasksCopy = tasks.slice()
@@ -170,6 +175,11 @@ export default {
       chunks.value = []
     }
 
+    const cleanFile = () => {
+      resetFile()
+      isUploaded.value = false
+    }
+
     return {
       fileTrigger,
       filename,
@@ -178,7 +188,8 @@ export default {
       handleSelectFile,
       handleFileChange,
       handleUpload,
-      handleUploadAgain
+      handleUploadAgain,
+      cleanFile
     }
 
   },
@@ -190,6 +201,9 @@ export default {
 }
 .file_field {
   padding: 10px 0;
+  .ant-btn {
+    margin-right: 20px;
+  }
 }
 .chunk {
   padding: 12px 0;
