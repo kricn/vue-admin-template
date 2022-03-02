@@ -1,4 +1,5 @@
-import axios from 'axios'
+import axios, { AxiosResponse } from 'axios'
+import { ResponseBody } from '@/types'
 
 const HTTP = axios.create({
   baseURL: '/api',
@@ -14,7 +15,7 @@ HTTP.interceptors.request.use(config => {
 });
 
 //相应拦截
-HTTP.interceptors.response.use(response => {
+HTTP.interceptors.response.use((response: AxiosResponse<ResponseBody>) => {
 	const data = response.data
 	return data
 }, error => {
