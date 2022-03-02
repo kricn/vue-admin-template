@@ -21,42 +21,59 @@
         </div>
       </template>
     </div>
-    <a-button type="primary" @click="handleUpload">upload</a-button>
+    <a-button type="primary" @click="handleUpload" v-if="!isUploaded">upload</a-button>
   </div>
 </template>
-<script>
+<script lang="ts">
 import { reactive, ref } from 'vue'
+import { ResponseBody } from '@/types'
+import { AxiosResponse } from 'axios'
 import {
   uploadBigFile,
   mergeBigFile
-} from '@/api/file.js'
+} from '@/api/file'
+
+interface Task {
+  index: number
+  action: () => Promise<any>
+}
+
+interface FileObj {
+  name: string
+  total: number
+}
 
 export default {
   name: 'FileUpload',
   setup() {
+    // 该文件是否已经上传过
+    let isUploaded = ref<boolean>(false)
     // 文件名
-    let filename = ref(null)
+    let filename = ref<string>('')
     // 每个文件对应的 hash 值，用于后端识别合并文件
-    let hash = ref(null)
-    let fileTrigger = ref(null)
+    let hash = ref<string>('')
+    let fileTrigger = ref<null | HTMLElement>(null)
     // 需要上传的文件，到时候就是从这个文件切片
-    let file = ref(null)
+    let file = ref<File | null>(null)
     // 切片后的数组
-    let chunks = ref([])
+    let chunks = ref<any[]>([])
     // 异步任务队列
-    let tasks = reactive([])
+    let tasks = reactive<Task[]>([])
     // 切片大小
-    const chunkSize = 1024 * 1024
+    const chunkSize: number = 1024 * 1024
 
     const handleSelectFile = () => {
       const trigger = fileTrigger.value
-      trigger.click()
+      trigger?.click()
     }
-    const handleFileChange = (e) => {
-      file.value = e.target.files[0]
+    // 选择文件
+    const handleFileChange = (e: Event) => {
+      const element = e.target as HTMLInputElement
+      file.value = (element.files as FileList)[0]
+      if (!file.value) return ;
       // hash 生成
       hash.value = 'abcdef'
-      filename.value = file.value.name
+      filename.value = file.value?.name
       // 切片
       chunks.value = handleSpliceFile(file.value, chunkSize)
       // 生成异步任务
@@ -64,7 +81,7 @@ export default {
         let formdata = new FormData()
         formdata.append('file', item.blob)
         formdata.append('name', item.name)
-        formdata.append('index', index)
+        formdata.append('index', index.toString())
         tasks.push({
           // 每个任务的标识
           index,
@@ -72,8 +89,9 @@ export default {
         })
       })
     }
+
     // 切片辅助函数
-    const handleSpliceFile = (file, size) => {
+    const handleSpliceFile = (file: File, size: number) => {
       const filesize = file.size
       const chunkLen = Math.ceil(filesize / size)
       let blob = []
@@ -88,8 +106,10 @@ export default {
       }
       return blob
     }
+
     // 开始上传
     const handleUpload = () => {
+      isUploaded.value = true
       // 复制一份任务队列
       const tasksCopy = tasks.slice()
       // 递归函数，控制并发，有顺序的执行任务
@@ -98,16 +118,16 @@ export default {
           return ;
         }
         const taskAction = tasksCopy.shift()
-        const currentTask = chunks.value.find(i => i.index === taskAction.index)
+        const currentTask = chunks.value.find(i => i.index === taskAction?.index)
         currentTask && (currentTask.status = 'uploading')
-        taskAction.action().then(() => {
+        taskAction?.action().then(() => {
           currentTask && (currentTask.status = 'success')
           // 判断是否需要合并文件
           if (
             chunks.value.filter(i => i.status == 'success') && 
             chunks.value.filter(i => i.status == 'success').length === chunks.value.length
           ) {
-            mergeBigFile({name: filename.value, total: chunks.value.length})
+            mergeFile({name: filename.value, total: chunks.value.length})
           }
         }).catch(() => {
           currentTask && (currentTask.status = 'fail')
@@ -121,27 +141,40 @@ export default {
         taskControl()
       }
     }
+
     // 单独的切片上传，用于意外原因而上传失败的切片
-    const handleUploadAgain = index => {
+    const handleUploadAgain = (index: number) => {
       const currentTask = tasks.find(i => i.index === index)
       const currentChunk = chunks.value.find(i => i.index === index)
-      currentTask.action().then(() => {
+      currentTask?.action().then(() => {
         currentChunk && (currentChunk.status = 'success')
         if (
           chunks.value.filter(i => i.status == 'success') && 
           chunks.value.filter(i => i.status == 'success').length === chunks.value.length
         ) {
-          mergeBigFile({name: filename.value, total: chunks.value.length})
+          mergeFile({name: filename.value, total: chunks.value.length})
         }
       }).catch(() => {
         currentChunk && (currentChunk.status = 'fail')
       })
     }
 
+    const mergeFile = async (fileObj: FileObj) => {
+      const res = await mergeBigFile(fileObj)
+    }
+
+    const resetFile = () => {
+      file.value = null
+      tasks = []
+      filename.value = ''
+      chunks.value = []
+    }
+
     return {
       fileTrigger,
       filename,
       chunks,
+      isUploaded,
       handleSelectFile,
       handleFileChange,
       handleUpload,
