@@ -1,8 +1,8 @@
 <template>
   <div class="test-search">
     <div class="input-wrapper">
-      <a-input class="search-input" v-model:value="inputValue" />
-      <a-button type="primary" @click="search">搜索</a-button>
+      <!-- <a-input class="search-input" v-model:value="inputValue" />
+      <a-button type="primary" @click="search">搜索</a-button> -->
     </div>
     
   </div>

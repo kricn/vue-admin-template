@@ -6,10 +6,11 @@
           <router-link :to="{path: item.path}" class="card">{{item.meta.title}}</router-link>
         </div>
       </template>
+      <el-button type="primary">按钮</el-button>
     </div>
   </div>
 </template>
-<script>
+<script lang="ts">
 import { ref } from 'vue'
 import routes from '@/router/menu'
 export default {
