@@ -17,6 +17,11 @@ app.use(session(app))
 const logger = require('./logger')
 app.use(logger())
 
+app.use(async (ctx, next) => {
+  ctx.set("Access-Control-Allow-Origin", "*")
+  await next()
+})
+
 // 静态服务
 const static = require('koa-static')
 const mount = require('koa-mount')

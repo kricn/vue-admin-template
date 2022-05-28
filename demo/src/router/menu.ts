@@ -1,4 +1,5 @@
-const menu = [
+import { RouteRecordRaw } from 'vue-router'
+const menu: RouteRecordRaw[] = [
   {
     path: 'file-upload',
     name: "FileUpload",

@@ -36,6 +36,7 @@ router.post('/upload', async ctx => {
   ctx.body = {
     name,
     index,
+    code: 1,
     msg: 'upload success.'
   }
 })
@@ -51,9 +52,10 @@ router.get('/merge', async ctx => {
     }
     return false;
   }
-  const writer = fs.createWriteStream(path.resolve(publicPath, name + '.jpg'))
+  const writer = fs.createWriteStream(path.resolve(publicPath, name))
   await mergeFile(dirPath, files, writer)
   ctx.body = {
+    code: 1,
     msg: 'merge success.'
   }
 })
