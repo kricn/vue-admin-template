@@ -9,7 +9,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: '/',
     name: 'Layout',
-    redirect: '/home',
+    // redirect: '/home',
     meta: {
       noShow: true
     },

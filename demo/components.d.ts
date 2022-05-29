@@ -7,6 +7,9 @@ declare module '@vue/runtime-core' {
   export interface GlobalComponents {
     Counter: typeof import('./src/components/testComponent/Counter.vue')['default']
     ElButton: typeof import('element-plus/es')['ElButton']
+    ElMenu: typeof import('element-plus/es')['ElMenu']
+    ElMenuItem: typeof import('element-plus/es')['ElMenuItem']
+    ElSubMenu: typeof import('element-plus/es')['ElSubMenu']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
     TestSearch: typeof import('./src/components/testComponent/TestSearch.vue')['default']

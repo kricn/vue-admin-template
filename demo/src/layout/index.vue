@@ -1,10 +1,14 @@
 <template>
-  <router-view />
+  <div class="container">
+    <SiderBar />
+    <router-view />
+  </div>
 </template>
 <script lang="ts">
-import { useRouter } from 'vue-router'
+import SiderBar from './Siderbar.vue'
 export default {
   name: 'Layout',
+  components: { SiderBar },
   setup() {
   },
 }
