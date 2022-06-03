@@ -1,10 +1,10 @@
 <template>
   <el-container class="container">
-    <el-aside>
+    <el-aside class="flex">
       <div class="logo">
         <div class="inner"></div>
       </div>
-      <SiderBar />
+      <Menu />
     </el-aside>
     <el-container>
       <el-header>
@@ -16,18 +16,16 @@
     </el-container>
   </el-container>
 </template>
-<script lang="ts">
-import SiderBar from './Siderbar.vue'
-export default {
-  name: 'Layout',
-  components: { SiderBar },
-  setup() {
-  },
-}
+<script setup lang="ts">
+import Menu from './Menu.vue'
 </script>
 <style lang="scss" scoped>
 .el-container {
   height: 100vh;
+  .el-aside {
+    height: 100vh;
+    flex-direction: column;
+  }
   .logo {
     width: 100%;
     height: 80px;
