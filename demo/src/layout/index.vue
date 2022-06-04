@@ -22,9 +22,29 @@ import Menu from './Menu.vue'
 <style lang="scss" scoped>
 .el-container {
   height: 100vh;
-  .el-aside {
+  ::v-deep .el-aside {
     height: 100vh;
     flex-direction: column;
+    >.el-menu {
+      flex: 1;
+      border-right-width: 0;
+      .el-menu-item {
+        &.is-active {
+          background: #1890ff;
+        }
+      }
+      .el-sub-menu {
+        .el-sub-menu__title {
+          background-color: #001529 !important;
+        }
+        .el-menu {
+          background-color: #000 !important;
+          .el-sub-menu__title {
+            background-color: #000 !important;
+          }
+        }
+      }
+    }
   }
   .logo {
     width: 100%;

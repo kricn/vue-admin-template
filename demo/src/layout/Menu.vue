@@ -35,17 +35,9 @@ export default defineComponent({
   
 </script>
 <style lang="scss" scoped>
-.el-menu {
-  flex: 1;
-  border-right-width: 0;
-  .el-menu-item {
-    &.is-active {
-      background: #1890ff;
-    }
-  }
-}
-.el-menu-vertical-demo:not(.el-menu--collapse) {
+
+/* .el-menu-vertical-demo:not(.el-menu--collapse) {
   width: 200px;
   min-height: 400px;
-}
+} */
 </style>
