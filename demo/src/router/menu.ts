@@ -1,7 +1,7 @@
 import { RouteRecordRaw } from 'vue-router'
 const menu: RouteRecordRaw[] = [
   {
-    path: 'file-upload',
+    path: '/file-upload',
     name: "FileUpload",
     meta: {
       title: '大文件上传'
@@ -9,35 +9,36 @@ const menu: RouteRecordRaw[] = [
     component: () => import('@/pages/FileUpload/index.vue')
   },
   {
-    path: 'test',
+    path: '/test',
     meta: {
       title: '级联菜单'
     },
     redirect: '/test/test1',
+    component: () => import("@/pages/index.vue"),
     children: [
       {
-        path: 'test1',
+        path: '/test/test1',
         meta: {
           title: '子菜单1'
         },
         component: () => import("@/pages/index.vue")
       },
       {
-        path: 'test2',
+        path: '/test/test2',
         meta: {
           title: '子菜单2'
         },
         component: () => import("@/pages/index.vue"),
         children: [
           {
-            path: 'test21',
+            path: '/test/test2/test21',
             meta: {
               title: '子菜单21'
             },
             component: () => import("@/pages/index.vue")
           },
           {
-            path: 'test22',
+            path: '/test/test2/test22',
             meta: {
               title: '子菜单22'
             },

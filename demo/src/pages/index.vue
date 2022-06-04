@@ -14,7 +14,6 @@
 import { ref } from 'vue'
 import routes from '@/router/menu'
 export default {
-  name: 'Layout',
   setup() {
     let renderRouteLists = ref([])
     const filterRoute = (routes) => {

@@ -1,6 +1,7 @@
 <template>
   <div class="test-container">
     <TestSearch v-model:value="keyword" @search="handleSearch" />
+    <el-button type="primary"></el-button>
   </div>
 </template>
 <script setup lang="ts">
