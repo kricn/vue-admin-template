@@ -1,6 +1,8 @@
 const path = require('path')
 const AutoImport = require('unplugin-auto-import/webpack')
 const Components = require('unplugin-vue-components/webpack')
+const Icons = require('unplugin-icons/webpack')
+const IconsResolver = require('unplugin-icons/resolver')
 const { ElementPlusResolver } = require('unplugin-vue-components/resolvers')
 module.exports = {
   pages: {
@@ -21,10 +23,24 @@ module.exports = {
   configureWebpack: {
     plugins: [
       AutoImport({
-        resolvers: [ElementPlusResolver()],
+        resolvers: [
+          ElementPlusResolver(), 
+          IconsResolver({
+            prefix: 'Icon',
+          })
+        ],
       }),
       Components({
-        resolvers: [ElementPlusResolver()],
+        resolvers: [
+          ElementPlusResolver(),
+          IconsResolver({
+            enabledCollections: ['ep'],
+          }),
+        ],
+      }),
+      Icons({
+        autoInstall: true,
+        compiler: 'vue3'
       }),
     ],
   },
