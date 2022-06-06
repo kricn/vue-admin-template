@@ -8,7 +8,7 @@
     </el-aside>
     <el-container>
       <el-header>
-        header
+        <Header />
       </el-header>
       <el-main>
         <router-view />
@@ -18,6 +18,7 @@
 </template>
 <script setup lang="ts">
 import Menu from './Menu.vue'
+import Header from './Header.vue'
 </script>
 <style lang="scss" scoped>
 .el-container {
@@ -25,6 +26,12 @@ import Menu from './Menu.vue'
   ::v-deep .el-aside {
     height: 100vh;
     flex-direction: column;
+    position: relative;
+    .trigger {
+      position: absolute;
+      top: 10px;
+      right: -20px;
+    }
     >.el-menu {
       flex: 1;
       border-right-width: 0;
@@ -58,6 +65,10 @@ import Menu from './Menu.vue'
       background-color: #fff;
       opacity: 0.3;
     }
+  }
+  .el-header {
+    background-color: #fff;
+    box-shadow: 0 1px 3px #eee;
   }
 }
 </style>
