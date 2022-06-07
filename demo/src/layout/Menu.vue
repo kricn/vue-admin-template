@@ -1,31 +1,33 @@
 <template>
   <el-menu
-    :collapse="isCollapse"
+    :collapse="trigger"
     background-color="#001529"
     text-color="#fff"
     active-text-color="#fff"
   >
+    
+      <div class="logo">
+        <div class="inner"></div>
+      </div>
     <MenuItem v-for="item in menus" :info="item" />
   </el-menu>
 </template>
 <script lang="ts">
-import { defineComponent, ref } from 'vue'
+import { defineComponent } from 'vue'
 import MenuItem from './MenuItem.vue';
 import menus from '@/router/menu'
 export default defineComponent({
   name: "Menu",
   components: { MenuItem },
-
-  setup() {
-    // 菜单收起展开
-    const isCollapse = ref<boolean>(false)
-    const trigger = () => {
-      isCollapse.value = !isCollapse.value
+  props: {
+    trigger: {
+      type: Boolean,
+      default: false,
     }
+  },
+  setup() {
 
     return {
-      isCollapse,
-      trigger,
       menus
     }
   }

@@ -1,5 +1,7 @@
 <template>
-  <el-menu-item v-if="!info.children" :index="info.path" @click="toPage(info)">{{info?.meta?.title}}</el-menu-item>
+  <el-menu-item v-if="!info.children" :index="info.path" @click="toPage(info)">
+    <span>{{info?.meta?.title}}</span>
+  </el-menu-item>
   <template v-if="info.children && info.children.length > 1">
     <el-sub-menu :index="info.path">
       <template #title><span>{{info?.meta?.title}}</span></template>

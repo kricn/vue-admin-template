@@ -1,6 +1,6 @@
 <template>
   <el-container class="container">
-    <el-aside class="flex">
+    <el-aside class="flex" :width="isCollapse ? '0px' : '300px'">
       <div class="logo">
         <div class="inner"></div>
       </div>
@@ -8,7 +8,7 @@
     </el-aside>
     <el-container>
       <el-header>
-        <Header />
+        <Header @menuTrigger="toggleCollapse" :trigger="isCollapse" />
       </el-header>
       <el-main>
         <router-view />
@@ -17,8 +17,17 @@
   </el-container>
 </template>
 <script setup lang="ts">
+import { ref } from 'vue'
 import Menu from './Menu.vue'
 import Header from './Header.vue'
+
+// 菜单收起展开
+const isCollapse = ref<boolean>(false)
+
+const toggleCollapse = () => {
+  isCollapse.value = !isCollapse.value
+}
+
 </script>
 <style lang="scss" scoped>
 .el-container {
@@ -27,6 +36,8 @@ import Header from './Header.vue'
     height: 100vh;
     flex-direction: column;
     position: relative;
+    transition: all 0.3s;
+    overflow-x: hidden;
     .trigger {
       position: absolute;
       top: 10px;

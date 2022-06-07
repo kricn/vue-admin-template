@@ -21,22 +21,20 @@ body {
 }
 
 /* flex布局 */
-.flex { display: flex; flex-wrap: wrap; }
+.flex { display: flex; }
 .f1 { flex: 1; }
 .f2 { flex: 2; }
 .f3 { flex: 3; }
-/* 不换行 */
-.flex { flex-wrap: nowrap; }
 /* 垂直居中 */
-.fvertical { align-items: center; }
+.fvertical { display: flex; align-items: center; }
 /* 水平居中 */
-.fcenter { justify-content: center; }
+.fcenter { display: flex; justify-content: center; }
 /* 右对齐 */
-.fright { flex-direction: row; justify-content: flex-end; }
+.fright { display: flex; flex-direction: row; justify-content: flex-end; }
 /* 两端对齐 */
-.fbetween { justify-content: space-between; }
+.fbetween { display: flex; justify-content: space-between; }
 /* 贴底对齐 */
-.fbottom { align-items: flex-end }
+.fbottom { display: flex; align-items: flex-end }
 /* 溢出...显示 当前节点生效 */
 .ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
 
