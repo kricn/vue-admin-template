@@ -2,7 +2,7 @@
   <div class="container">
     <input class="file_trigger" type="file" ref="fileTrigger" @change="handleFileChange" />
     <div class="file_field">
-      <button @click="handleSelectFile">{{ filename ? '重新选择文件' : '请选择文件'}}</button>
+      <el-button @click="handleSelectFile">{{ filename ? '重新选择文件' : '请选择文件'}}</el-button>
       <div v-if="filename">
         已选文件：{{ filename }}
       </div>
@@ -11,17 +11,17 @@
       <template v-for="(chunk) in chunks" :key="chunk.index">
         <div class="chunk">
           <span :style="{ color: chunk.status === 'fail' ? 'red': '' }">{{chunk.name}}-{{chunk.hash}}-{{chunk.index}}--------{{ chunk.status }}</span>
-          <button 
+          <el-button 
             type="primary" 
             @click="handleUploadAgain(chunk.index)"
             v-if="chunk.status === 'fail'"
           >
             重新上传
-          </button>
+          </el-button>
         </div>
       </template>
     </div>
-    <button type="primary" @click="handleUpload">upload</button>
+    <el-button type="primary" @click="handleUpload">upload</el-button>
   </div>
 </template>
 <script lang="ts">

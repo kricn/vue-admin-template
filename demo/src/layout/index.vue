@@ -1,85 +1,91 @@
 <template>
-  <el-container class="container">
-    <el-aside class="flex" :width="isCollapse ? '0px' : '300px'">
-      <div class="logo">
-        <div class="inner"></div>
-      </div>
-      <Menu />
-    </el-aside>
-    <el-container>
-      <el-header>
-        <Header @menuTrigger="toggleCollapse" :trigger="isCollapse" />
-      </el-header>
-      <el-main>
-        <router-view />
-      </el-main>
-    </el-container>
-  </el-container>
+  <div :class="[
+    'the-layout',
+    { 'has-tags-view': layoutInfo.showTagsView },
+    { 'collapsed-sidebar': !layoutInfo.sidebarOpen }
+  ]">
+    <HeaderBar />
+    <Sidebar />
+    <div class="the-layout-content" ref="contentBox">
+      <router-view class="the-layout-page" v-slot="{ Component, route }">
+        <transition name="fadeSlideX" mode="out-in">
+          <keep-alive :include="cacheList">
+            <component :is="Component" :key="route.path" />
+          </keep-alive>
+        </transition>
+      </router-view>
+    </div>
+    <button :class="['the-layout-totop', { 'the-layout-totop-hide': !showToTop }]" title="返回顶部"
+      @click="toTop()"></button>
+  </div>
 </template>
-<script setup lang="ts">
-import { ref } from 'vue'
-import Menu from './Menu.vue'
-import Header from './Header.vue'
+<script lang="ts">
+import { defineComponent, onMounted, ref } from "vue";
+import HeaderBar from "./components/HeaderBar.vue";
+import Sidebar from "./components/Sidebar.vue";
+import store from "@/store";
+import { RouteItem } from "@/types";
 
-// 菜单收起展开
-const isCollapse = ref<boolean>(false)
+export default defineComponent({
+  name: "Layout",
+  components: {
+    HeaderBar,
+    Sidebar
+  },
+  setup() {
+    const layoutInfo = store.layout.info;
 
-const toggleCollapse = () => {
-  isCollapse.value = !isCollapse.value
-}
+    function getCachList(list: Array<RouteItem>) {
+      let result: Array<string> = [];
+      for (let i = 0; i < list.length; i++) {
+        const item = list[i];
+        const child = item.children;
+        if (child && child.length > 0) {
+          result = result.concat(getCachList(child));
+        }
+        if (item.meta.keepAlive && item.name) {
+          result.push(item.name);
+        }
+      }
+      return result.filter(item => item);
+    }
 
+    // 这里不是动态的，所以可以不用响应式
+    const cacheList = getCachList(store.layout.completeRouters);
+    // console.log("路由缓存列表 >>", cacheList);
+
+    const contentBox = ref<HTMLElement>();
+
+    const showToTop = ref(false);
+
+    let contentEl: HTMLElement;
+
+    function toTop() {
+      contentEl.scrollTo({
+        top: 0,
+        left: 0,
+        behavior: "smooth"
+      })
+    }
+
+    function onScroll() {
+      // 判断超过一屏高度则显示返回顶部按钮
+      showToTop.value = contentEl.scrollTop > document.documentElement.clientHeight;
+    }
+
+    onMounted(function () {
+      contentEl = contentBox.value!;
+      contentEl.addEventListener("scroll", onScroll);
+      onScroll(); // 一开始要先执行，因为有可能一开始就处于页面非顶部
+    });
+
+    return {
+      layoutInfo,
+      cacheList,
+      contentBox,
+      showToTop,
+      toTop
+    }
+  }
+})
 </script>
-<style lang="scss" scoped>
-.el-container {
-  height: 100vh;
-  ::v-deep .el-aside {
-    height: 100vh;
-    flex-direction: column;
-    position: relative;
-    transition: all 0.3s;
-    overflow-x: hidden;
-    .trigger {
-      position: absolute;
-      top: 10px;
-      right: -20px;
-    }
-    >.el-menu {
-      flex: 1;
-      border-right-width: 0;
-      .el-menu-item {
-        &.is-active {
-          background: #1890ff;
-        }
-      }
-      .el-sub-menu {
-        .el-sub-menu__title {
-          background-color: #001529 !important;
-        }
-        .el-menu {
-          background-color: #000 !important;
-          .el-sub-menu__title {
-            background-color: #000 !important;
-          }
-        }
-      }
-    }
-  }
-  .logo {
-    width: 100%;
-    height: 80px;
-    background-color: #001529;
-    padding: 15px 50px;
-    cursor: pointer;
-    .inner {
-      width: 100%;
-      height: 100%;
-      background-color: #fff;
-      opacity: 0.3;
-    }
-  }
-  .el-header {
-    background-color: #fff;
-    box-shadow: 0 1px 3px #eee;
-  }
-}
-</style>
