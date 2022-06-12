@@ -19,13 +19,11 @@ export default defineComponent({
   setup() {
 
     function getSvgNames() {
-      const requireAll = (context: __WebpackModuleApi.RequireContext) => context.keys().map(context)
+      const requireAll = (context: __WebpackModuleApi.RequireContext) => context.keys()
       const svgInfo = require.context("@/icons/svg", false, /\.svg/);
       const svgs = requireAll(svgInfo);
-      const names = (svgs as string[]).map(value => {
-        const nameArr: string[] = value.split("/").slice(-1)[0].split(".")
-        const res = [nameArr[0], nameArr.slice(-1)[0]].join('.')
-        return res;
+      const names = (svgs as string[]).map((value: string) => {
+        return value.match(/\.\/(.*)\.svg/)![1];
       });
       return names;
     }
