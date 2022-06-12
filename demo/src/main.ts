@@ -4,6 +4,8 @@ import SvgIcon from "./icons/index.vue";
 import Router from "./router";
 import ripple from "./utils/ripple";
 import { copyText, isMobile } from "./utils";
+import "./styles/index.scss"
+import "./styles/layout.scss"
 
 import "./styles/index.scss";
 

@@ -1,131 +1,201 @@
-@import './constance.scss';
-@import "./layout.scss";
+@import "./variables.scss";
+@import "./common.scss";
+@import "./ripple.scss";
 
-* {
-  box-sizing: border-box;
-  padding: 0; margin: 0;
-}
-
-body, html {
-  width: 100%;
-  height: 100%;
-  overflow: auto;
-}
-
-#root {
-  width: 100%;
-  height: 100%;
-}
-
-body {
-  background-color: $BackgroundColor;
-}
-
-/* flex布局 */
-.flex { display: flex; }
-.f1 { flex: 1; }
-.f2 { flex: 2; }
-.f3 { flex: 3; }
-/* 垂直居中 */
-.fvertical { display: flex; align-items: center; }
-/* 水平居中 */
-.fcenter { display: flex; justify-content: center; }
-/* 右对齐 */
-.fright { display: flex; flex-direction: row; justify-content: flex-end; }
-/* 两端对齐 */
-.fbetween { display: flex; justify-content: space-between; }
-/* 贴底对齐 */
-.fbottom { display: flex; align-items: flex-end }
-/* 溢出...显示 当前节点生效 */
-.ellipsis { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
-/* 溢出...显示 子节点生效 */
-.ellipsis_1 { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 1; overflow: hidden; }
-.ellipsis_2 { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; }
-.ellipsis_3 { display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 3; overflow: hidden; }
-
-// 上下左右 内外边距，10、20、30、40、50
+/* 上下左右边距 */
 @for $index from 1 through 5 {
-  .mgl_#{$index}0 {
-    margin-left: 10px * $index;
-  }
-  .mgr_#{$index}0 {
-    margin-right: 10px * $index;
-  }
-  .mgt_#{$index}0 {
-    margin-top: 10px * $index;
-  }
-  .mgb_#{$index}0 {
-    margin-bottom: 10px * $index;
-  }
-
-  .pdl_#{$index}0 {
-    padding-left: 10px * $index;
-  }
-  .pdr_#{$index}0 {
-    padding-right: 10px * $index;
-  }
-  .pdt_#{$index}0 {
-    padding-top: 10px * $index;
-  }
-  .pdb_#{$index}0 {
-    padding-bottom: 10px * $index;
-  }
+    .mgl_#{$index}0 {
+        margin-left: 10px * $index;
+    }
+    .mgr_#{$index}0 {
+        margin-right: 10px * $index;
+    }
+    .mgt_#{$index}0 {
+        margin-top: 10px * $index;
+    }
+    .mgb_#{$index}0 {
+        margin-bottom: 10px * $index;
+    }
+    .pdl_#{$index}0 {
+        padding-left: 10px * $index;
+    }
+    .pdr_#{$index}0 {
+        padding-right: 10px * $index;
+    }
+    .pdt_#{$index}0 {
+        padding-top: 10px * $index;
+    }
+    .pdb_#{$index}0 {
+        padding-bottom: 10px * $index;
+    }
 }
 
-// 手势
-.pointer {
-  cursor: pointer;
+// ===================== 全局动画 =====================
+// 渐变+平移
+.fadeSlideX-leave-active, .fadeSlideX-enter-active {
+    transition: .5s all !important;
 }
 
-img {
-  display: inline-block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
+.fadeSlideX-enter-active, .fadeSlideX-leave-active {
+    opacity: 1;
+    transform: translate3d(0px, 0, 0);
 }
 
-.router-enter {
-  transform: translate(100%, 0);
-  opacity: 0;
+.fadeSlideX-enter-from {
+    opacity: 0;
+    transform: translate3d(-30px, 0, 0);
 }
 
-.router-enter-active {
-  transform: translate(0, 0);
-  opacity: 1;
-  transition: all 500ms;
+.fadeSlideX-leave-to {
+    opacity: 0;
+    transform: translate3d(30px, 0, 0);
 }
 
-.router-exit {
-  transform: translate(0, 0);
-  opacity: 1;
+// 面包屑
+.breadcrumb-enter-active, .breadcrumb-leave-active {
+    transition: .5s all
 }
 
-.router-exit-active {
-  transform: translate(-100%, 0);
-  opacity: 0;
-  transition: all 500ms;
+.breadcrumb-enter-from, .breadcrumb-leave-to {
+    opacity: 0;
+    transform: translate3d(20px, 0, 0);
 }
 
-/** 渐隐-X 轴滑动 */
-.fade-sildeX-enter {
-  transform: translate(20%, 0);
-  opacity: 0;
+.breadcrumb-leave-to {
+    position: absolute;
 }
 
-.fade-sildeX-enter-active {
-  transform: translate(0, 0);
-  opacity: 1;
-  transition: all 300ms;
+// 渐变
+.fade-enter-active, .fade-leave-active {
+    @include moveTime();
 }
 
-.fade-sildeX-exit {
-  transform: translate(0, 0);
-  opacity: 1;
+.fade-enter-from, .fade-leave-to {
+    opacity: 0;
 }
 
-.fade-sildeX-exit-active {
-  transform: translate(-100%, 0);
-  opacity: 0;
-  transition: all 300ms;
+// ================= 示例全局样式 =================
+
+.the-input {
+    width: 100%;
+    border: 1px solid #DCDFE6;
+    border-radius: 4px;
+    color: #1f2d3d;
+    height: 38px;
+    line-height: 38px;
+    font-size: 14px;
+    padding: 0 15px;
+    outline: none;
+    transition: 0.2s all;
+    &:focus {
+        border-color: $theme;
+    }
+}
+
+.the-btn {
+    font-size: 14px;
+    padding: 0px 15px;
+    min-width: 88px;
+    height: 36px;
+    line-height: 1;
+    border-radius: 2px;
+    background-color: #fff;
+    color: rgba(0,0,0,.87);
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,0.2), 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12);
+    @include moveTime();
+    outline: none;
+    text-align: center;
+    border: none;
+    cursor: pointer;
+    &:active {
+        box-shadow: 0 5px 5px -3px rgba(0,0,0,0.2), 0 8px 10px 1px rgba(0,0,0,0.14), 0 3px 14px 2px rgba(0,0,0,0.12);
+    }
+}
+
+.the-btn + .the-btn {
+    margin-left: 10px;
+}
+
+.the-btn.mini {
+    font-size: 12px;
+    height: 28px;
+    border-radius: 3px;
+}
+
+.the-btn.blue {
+    background-color: $theme;
+    color: #fff;
+}
+
+.the-btn.green {
+    background-color: #4caf50;
+    color: #fff;
+}
+
+.the-btn.yellow {
+    background-color: #fdd835;
+    color: #fff;
+}
+
+.the-btn.red {
+    background-color: #f44336;
+    color: #fff;
+}
+
+.check-box {
+    cursor: pointer;
+    font-size: 14px;
+    color: $theme;
+    input {
+        width: 16px;
+        height: 16px;
+        margin-right: 4px;
+        line-height: 1;
+        &:checked {
+            background-color: $theme;
+        }
+    }
+}
+
+.the-tag {
+    display: inline-block;
+    padding: 6px 8px;
+    border-radius: 2px;
+    line-height: 1;
+    font-size: 14px;
+}
+
+.the-tag + .the-tag {
+    margin-left: 10px;
+}
+
+.the-tag.green { @include tagColor(#e7faf0, #13ce66); }
+.the-tag.blue { @include tagColor(#e8f3ff, $theme); }
+.the-tag.gray { @include tagColor(#efefef, #5d5d5d); }
+.the-tag.red { @include tagColor(#ffeded, #ff4949); }
+.the-tag.orange { @include tagColor(#fff7e6, #d46b08); }
+.the-tag.purple { @include tagColor(#f9f0ff, #531dab); }
+.the-tag.cyan { @include tagColor(#e6fffb, #08979c); }
+
+.the-title {
+    position: relative;
+    font-size: 24px;
+    color: #303133;
+    font-weight: normal;
+    display: inline-block;
+    padding-right: 8px;
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: -4px;
+        left: 0;
+        width: 100%;
+        height: 4px;
+        border-radius: 2px;
+        background-color: $theme;
+        opacity: 0.8;
+    }
+    &::before {
+        content: "Title ";
+    }
 }
