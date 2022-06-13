@@ -41,14 +41,7 @@ const add: Array<RouteItem> = [
         path: "/home",
         meta: { title: "首页展示", icon: "guide" },
         component: () => import("@/views/index.vue"),
-      },
-      {
-        path: "/link-baidu",
-        name: "link-baidu",
-        link: "https://www.baidu.com",
-        component: Page404, // 这里必需给一个组件
-        meta: { title: "百度一下", icon: "baidu" },
-      },
+      }
     ],
   },
   {

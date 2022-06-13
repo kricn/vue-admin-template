@@ -7,8 +7,6 @@ import { copyText, isMobile } from "./utils";
 import "./styles/index.scss"
 import "./styles/layout.scss"
 
-import "./styles/index.scss";
-
 const app = createApp(App);
 
 // 添加一个自定义指令`v-copy`点击复制内容
