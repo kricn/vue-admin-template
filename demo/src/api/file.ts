@@ -1,19 +1,9 @@
-import { ResponseBody } from '@/types'
-import HTTP from '@/utils/http'
-import { AxiosResponse } from 'axios'
+import request from '@/utils/request'
 
 export function uploadBigFile (data: any) {
-  return HTTP.request({
-    url: '/file/upload',
-    method: 'POST',
-    data
-  })
+  return request("POST", "/file/upload", data);
 }
 
-export function mergeBigFile(params: any): Promise<ResponseBody> {
-  return HTTP.request({
-    url: '/file/merge',
-    method: 'GET',
-    params
-  })
+export function mergeBigFile(params: any) {
+  return request("GET", "/file/merge", params)
 }
