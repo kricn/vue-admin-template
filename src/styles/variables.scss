@@ -1,0 +1,16 @@
+:root {
+  // 主题蓝色
+  --blue: #1890FF;
+  --green: #13ce66;
+  --yellow: #FFBA00;
+  --red: #ff4949;
+  --gray: #5d5d5d;
+  --orange: #d46b08;
+  --purple: #531dab;
+  --cyan: #08979c;
+  --black: #1f2d3d;
+  // 矩阵节点统一使用圆角变量
+  --border-radius: 2px;
+  // 统一过渡时间效果
+  --transition: .3s all;
+}
