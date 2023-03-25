@@ -75,7 +75,6 @@ function onLogout() {
 
 function clearCache() {
   layoutInfo.historyViews = [];
-  Global.permission.reset();
   // 现在不需要了，vue 3.x 之后路由增加了删除路由方法
   // removeRoutes();
   // TODO: 这里必选要刷新，因为需要请求接口

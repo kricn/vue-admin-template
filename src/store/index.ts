@@ -1,6 +1,5 @@
 import ModuleUser from './User';
 import ModuleLayout from './Layout';
-import ModulePermission from './Permission';
 
 class ModuleStore {
   constructor() {
@@ -9,9 +8,9 @@ class ModuleStore {
 
   /** 项目信息 */
   readonly projectInfo = {
-    title: '业务中心',
+    title: 'vue3 后台模板',
     name: '业务中心后台管理平台',
-    logo: 'https://hk.boshiyun.com.cn/static/img/boshiyun.35582c0c.png',
+    logo: '',
     link: 'https://github.com/Hansen-hjs/vue-admin'
   }
 
@@ -26,9 +25,6 @@ class ModuleStore {
 
   /** 用户状态模块 */
   readonly user = new ModuleUser();
-
-  /** 菜单权限状态 */
-  readonly permission = new ModulePermission();
   
 }
 

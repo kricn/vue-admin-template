@@ -43,7 +43,7 @@ function getViewComponent(path: string) {
  * 处理并获取动态路由
  * @param routes 
  */
-function getRoutes(routes: Array<ApiMenuItem>): Array<RouteItem> {
+function getRoutes(routes: Array<RouteItem>): Array<RouteItem> {
   return []
 }
 
@@ -84,13 +84,8 @@ export function initPermission(vueRouter: Router, baseRoutes: Array<RouteItem>, 
 
           next({ ...to, replace: true });
         }
-        // 先从缓存里面读取动态菜单
-        const menuInfo = Global.permission.info;
-        if (menuInfo.menus.length > 0) {
-          toComplete(getRoutes(menuInfo.menus));
-        } else {
-          // 从接口获取菜单
-        }
+        // todo 先从缓存里面读取动态菜单
+        toComplete(baseRoutes)
       }
     } else {
       if (to.path === '/login') {

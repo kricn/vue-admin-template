@@ -32,7 +32,7 @@ const config = (function () {
     },
     /** cookie token key */
     get tokenKey() {
-      return 'business-access-token';
+      return 'admin-token';
     },
     /**
      * 当前项目域名（不含路径）

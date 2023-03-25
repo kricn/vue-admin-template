@@ -3,8 +3,8 @@
     <el-scrollbar>
       <transition name="fade">
         <div class="the-logo-box" v-if="layoutInfo.showSidebarLogo">
-          <router-link class="the-logo-link fvertical" to="/">
-            <img class="the-logo" :src="info.logo" />
+          <router-link class="the-logo-link fcc" to="/">
+            <img class="the-logo" :src="info.logo" v-if="info.logo" />
             <h1 class="the-logo-title ellipsis" :title="info.title">{{ info.title }}</h1>
           </router-link>
         </div>
