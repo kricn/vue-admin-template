@@ -17,7 +17,7 @@
 <script lang="ts">
 import { copyText } from '@/utils';
 import { ElMessage } from 'element-plus';
-import { defineComponent, PropType } from 'vue';
+import { defineComponent } from 'vue';
 
 /** 图标列表 */
 export default defineComponent({
@@ -27,17 +27,6 @@ export default defineComponent({
 <script lang="ts" setup>
 
 const svgFileReg = /(?<=(svg\/)).*?(?=(.svg))/;
-
-const props = defineProps({
-  type: {
-    type: String as PropType<'page'|'popup'>,
-    default: 'page'
-  }
-});
-
-const emit = defineEmits<{
-  (event: 'iconClick', name: string): void
-}>();
 
 function getSvgNames() {
   const svgInfo = import.meta.glob("/src/icons/svg/*.svg");
@@ -56,13 +45,9 @@ function getSvgIconCode(symbol: string) {
 const list = getSvgNames();
 
 function onClickIcon(name: string) {
-  if (props.type === 'popup') {
-    emit('iconClick', name);
-  } else {
-    copyText(getSvgIconCode(name), () => {
-      ElMessage.success('复制图标代码成功！');
-    })
-  }
+  copyText(getSvgIconCode(name), () => {
+    ElMessage.success('复制图标代码成功！');
+  })
 }
 
 // console.log("svg-list >>", list);

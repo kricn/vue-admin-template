@@ -1,10 +1,8 @@
 import { Router } from 'vue-router';
-import Layout from '@/layout/index.vue';
 import Global from '../store';
 import NProgress from 'nprogress';
 import 'nprogress/nprogress.css';
 import { RouteItem } from '@/types';
-import { isExternal } from '@/utils';
 import { getToken } from '@/utils/authorization';
 
 // NProgress.configure({ showSpinner: false });
@@ -83,7 +81,6 @@ export function initPermission(vueRouter: Router, baseRoutes: Array<RouteItem>, 
         next({ ...to, replace: true });
       }
     } else {
-      console.log(router)
       if (to.path === '/login') {
         next();
       } else {
