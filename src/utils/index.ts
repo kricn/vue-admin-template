@@ -116,6 +116,7 @@ export function copyText(text: string, success?: () => void, fail?: (res: string
   clipboard.select();
   clipboard.setSelectionRange(0, clipboard.value.length);
   const state = document.execCommand('copy');
+  window.getSelection?.()?.removeAllRanges()
   if (state) {
     success && success();
   } else {

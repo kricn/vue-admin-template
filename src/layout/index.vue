@@ -48,7 +48,7 @@ function getCachList(list: Array<RouteItem>) {
 }
 
 // 这里不是动态的，所以可以不用响应式
-const cacheList = getCachList(Global.layout.completeRouters);
+const cacheList = getCachList(Global.layout.routers);
 // console.log("路由缓存列表 >>", cacheList);
 
 const contentBox = ref<HTMLElement>();

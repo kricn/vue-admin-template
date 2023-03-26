@@ -2,29 +2,26 @@
   <div class="page-login fcc">
     <div class="login-box">
       <div :class="['container', 'container-register', { 'is-txl': isLogin }]">
-        <el-form :model="registerFormData" :rules="formRules">
+        <form>
           <h2 class="title">创建账户</h2>
-          <el-input class="form-input"  v-model="formData.username" placeholder="用户名">
-            <template #suffix>
-              <el-icon class="el-input__icon"><calendar /></el-icon>
-            </template>
-          </el-input>
-          <el-input class="form-input" type="password" v-model="formData.password" placeholder="密码" />
-          <div class="primary-btn">立即注册</div>
-        </el-form>
+          <input class="form-input"  v-model="registerFormData.username" placeholder="用户名" />
+          <input class="form-input" type="password" v-model="registerFormData.password" placeholder="密码" />
+          <div :class="['primary-btn', loading ? 'disabled' : '']" @click="onRegister">立即注册</div>
+        </form>
       </div>
       <div :class="['container', 'container-login', { 'is-txl is-z200': isLogin }]">
-        <el-form :model="formData" :rules="formRules">
+        <form>
           <h2 class="title">登录</h2>
-          <el-input class="form-input" v-model="formData.username" placeholder="用户名" />
-          <el-input class="form-input" type="password" v-model="formData.password" placeholder="密码" />
-          <div class="primary-btn" @click="onLogin">立即登录</div>
-        </el-form>
+          <input class="form-input" v-model="formData.username" placeholder="用户名，随便填" />
+          <input class="form-input" type="password" v-model="formData.password" placeholder="密码，随便填" />
+          <div :class="['primary-btn', loading ? 'disabled' : '']" @click="onLogin" :disabled="loading">立即登录</div>
+        </form>
       </div>
       <div :class="['switch', { login: isLogin }]">
         <div class="switch__circle"></div>
         <div class="switch__circle switch__circle_top"></div>
-        <div class="switch__container">
+        <div :class="['primary-btn', loading ? 'disabled' : '']" @click="onQuickLogin">一键登录</div>
+        <!-- <div class="switch__container">
           <h2>{{ isLogin ? 'Hello Friend !' : 'Welcome Back !' }}</h2>
           <p>
             {{
@@ -36,7 +33,7 @@
           <div class="primary-btn" @click="isLogin = !isLogin">
             {{ isLogin ? '立即注册' : '立即登录' }}
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -55,20 +52,40 @@ const initFormData = () => ({
 })
 
 const initRegisterFormData = () => ({
-  usename: '',
+  username: '',
   password: '',
 })
 
 const isLogin = ref(true)
 const formData = ref(initFormData())
 const registerFormData = ref(initRegisterFormData())
-const formRules = {
+const loading = ref(false)
 
+const onLogin = async () => {
+  if (loading.value) return ;
+  if (!formData.value.username) {
+    alert('请输入用户名')
+    return ;
+  }
+  if (!formData.value.password) {
+    alert('请输入密码')
+    return ;
+  }
+  loading.value = true
+  await new Promise(resolve => setTimeout(resolve, 500))
+  loading.value = false
+  setToken('login')
+  router.replace('/')
 }
 
-const onLogin = () => {
-  setToken('login')
-  router.push('/')
+const onQuickLogin = () => {
+  formData.value.username = 'admin'
+  formData.value.password = Math.random().toString(36).substring(0,8)
+  onLogin()
+}
+
+const onRegister = () => {
+
 }
 
 
@@ -97,7 +114,7 @@ const onLogin = () => {
       padding: 25px;
       background-color: #ecf0f3;
       transition: all 0.3s;
-      :deep(.el-form) {
+      form {
         display: flex;
         justify-content: center;
         align-items: center;
@@ -123,15 +140,13 @@ const onLogin = () => {
           font-size: 14px;
           transition: 0.25s ease;
           border-radius: 8px;
+          border: none;
+          outline: none;
+          box-shadow: inset 2px 2px 4px #d1d9e6, inset -2px -2px 4px #f9f9f9 !important;
+          background-color: #ecf0f3 !important;
           
           &::placeholder {
             color: #a0a5a8;
-          }
-          .el-input__wrapper {
-            border: none;
-            outline: none;
-            box-shadow: inset 2px 2px 4px #d1d9e6, inset -2px -2px 4px #f9f9f9 !important;
-            background-color: #ecf0f3 !important;
           }
         }
       }
@@ -227,12 +242,19 @@ const onLogin = () => {
       background-color: #4b70e2;
       color: #f9f9f9;
       cursor: pointer;
+      user-select: none;
       box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #f9f9f9;
       &:hover {
         box-shadow: 4px 4px 6px 0 rgb(255 255 255 / 50%),
           -4px -4px 6px 0 rgb(116 125 136 / 50%),
           inset -4px -4px 6px 0 rgb(255 255 255 / 20%),
           inset 4px 4px 6px 0 rgb(0 0 0 / 40%);
+      }
+      &.disabled {
+        opacity: .5;
+        &:hover {
+          box-shadow: 8px 8px 16px #d1d9e6, -8px -8px 16px #f9f9f9;
+        }
       }
     }
   }

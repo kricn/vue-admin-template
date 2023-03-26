@@ -55,6 +55,7 @@ import { useRoute, useRouter } from "vue-router";
 import Breadcrumb from "./Breadcrumb.vue";
 import Global from "@/store";
 import { HistoryViewsItem } from "@/types";
+import { removeToken } from '@/utils/authorization';
 
 const route = useRoute();
 const router = useRouter();
@@ -75,10 +76,7 @@ function onLogout() {
 
 function clearCache() {
   layoutInfo.historyViews = [];
-  // 现在不需要了，vue 3.x 之后路由增加了删除路由方法
-  // removeRoutes();
-  // TODO: 这里必选要刷新，因为需要请求接口
-  location.reload();
+  removeToken()
 }
 
 function isActive(item: HistoryViewsItem) {
@@ -89,9 +87,8 @@ function onRemove(index: number) {
   layoutInfo.historyViews.splice(index, 1);
 }
 
-// layoutInfo.historyViews = [];
+
 watch(() => route.path, function () {
-  // console.log("route >>", route);
   const hasItem = layoutInfo.historyViews.some(item => isActive(item))
   if (!hasItem) {
     layoutInfo.historyViews.push({

@@ -81,6 +81,7 @@ function onClickIcon(name: string) {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     color: #555;
     font-size: 15px;
+    user-select: none;
     .svg-icon {
       width: 28px;
       height: 28px;

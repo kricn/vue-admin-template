@@ -87,7 +87,7 @@ function handleMerge(list: Array<LayoutMenuItem>) {
   return result;
 }
 
-let list = formatMenuList(filterHidden(Global.layout.completeRouters));
+let list = formatMenuList(filterHidden(Global.layout.routers));
 
 if (props.mergeOnlyOneChild) {
   list = handleMerge(list);

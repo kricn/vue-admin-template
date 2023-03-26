@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import Layout from "@/layout/index.vue";
 import { RouteItem } from "@/types";
 import { initPermission } from "./permission";
@@ -99,7 +99,7 @@ if (config.isDev) {
  * [文档地址](https://next.router.vuejs.org/introduction.html)
  */
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(),
   routes: base,
 });
 

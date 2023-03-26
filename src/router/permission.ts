@@ -39,13 +39,6 @@ function getViewComponent(path: string) {
   return vueFiles[`../views${path}.vue`];
 }
 
-/**
- * 处理并获取动态路由
- * @param routes 
- */
-function getRoutes(routes: Array<RouteItem>): Array<RouteItem> {
-  return []
-}
 
 /**
  * 初始化权限管理
@@ -57,37 +50,40 @@ export function initPermission(vueRouter: Router, baseRoutes: Array<RouteItem>, 
   // 设置路由实例
   router = vueRouter;
 
+  /** 初始化基础路由 */
+  for (let i = 0; i < baseRoutes.length; i++) {
+    const item = baseRoutes[i];
+    router.addRoute(item);
+  }
+
   router.beforeEach(function (to, from, next) {
     NProgress.start();
 
     const token = getToken();
     if (token) {
-      if (Global.layout.addRouters.length > 0) {
+      if (Global.layout.privateRouters.length > 0) {
         next();
       } else {
-        function toComplete(list: Array<RouteItem>) {
-          Global.layout.addRouters = list.concat(addRoutes);
-          // 逐个添加进去
-          for (let i = 0; i < Global.layout.addRouters.length; i++) {
-            const item = Global.layout.addRouters[i];
-            router.addRoute(item);
-          }
-          // vue 3.x 之后路由取消了自动匹配，要手动设置匹配方式
-          // learn https://my.oschina.net/qinghuo111/blog/4832051
-          if (!router.hasRoute(redirectRouteName)) {
-            // router.addRoute({ path: "/:catchAll(.*)", name: redirectRouteName, redirect: "/404" });
-            // 不重定向到`/404`
-            router.addRoute({ ...baseRoutes[1], path: "/:catchAll(.*)", name: redirectRouteName });
-          }
-
-          Global.layout.completeRouters = baseRoutes.concat(Global.layout.addRouters);
-
-          next({ ...to, replace: true });
+        Global.layout.privateRouters = addRoutes
+        // 逐个添加进去
+        for (let i = 0; i < Global.layout.privateRouters.length; i++) {
+          const item = Global.layout.privateRouters[i];
+          router.addRoute(item);
         }
-        // todo 先从缓存里面读取动态菜单
-        toComplete(baseRoutes)
+        // vue 3.x 之后路由取消了自动匹配，要手动设置匹配方式
+        // learn https://my.oschina.net/qinghuo111/blog/4832051
+        if (!router.hasRoute(redirectRouteName)) {
+          // router.addRoute({ path: "/:catchAll(.*)", name: redirectRouteName, redirect: "/404" });
+          // 不重定向到`/404`
+          router.addRoute({ ...baseRoutes[1], path: "/:catchAll(.*)", name: redirectRouteName });
+        }
+
+        Global.layout.routers = baseRoutes.concat(Global.layout.privateRouters);
+
+        next({ ...to, replace: true });
       }
     } else {
+      console.log(router)
       if (to.path === '/login') {
         next();
       } else {
@@ -104,9 +100,9 @@ export function initPermission(vueRouter: Router, baseRoutes: Array<RouteItem>, 
   // 获取首个路由并跳转
   router.beforeResolve((to, from ,next) => {
     if (to.path === '/') {
-      next({ path: Global.layout.addRouters[0].path });
+      next({ path: Global.layout.privateRouters[0].path });
     }
-    const matched = Global.layout.completeRouters.find(item => item.path == to.path)
+    const matched = Global.layout.routers.find(item => item.path == to.path)
     if (matched && matched.children) {
       next({ path: matched.children[0].path });
     } else {
@@ -140,7 +136,7 @@ export function openNextPage() {
  * - 退出登录时用
 */
 export function removeRoutes() {
-  const list = Global.layout.addRouters;
+  const list = Global.layout.privateRouters;
   for (let i = list.length - 1; i > -1; i--) {
     const item = list[i];
     if (item.name && router.hasRoute(item.name)) {
@@ -152,5 +148,5 @@ export function removeRoutes() {
   // 和上面对应的 404
   router.removeRoute(redirectRouteName);
   // 清空路由缓存对象
-  Global.layout.addRouters = Global.layout.completeRouters = [];
+  Global.layout.privateRouters = Global.layout.routers = [];
 }
