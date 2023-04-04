@@ -1,0 +1,8 @@
+{
+  "FormInput": {
+    "name": "输入框"
+  },
+  "FormSelect": {
+    "name": "选择框"
+  }
+}

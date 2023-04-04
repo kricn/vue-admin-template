@@ -1,9 +1,9 @@
 /// <reference types="vite/client" />
 
-declare module "*.vue" {
-  import { DefineComponent } from "vue"
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any, @typescript-eslint/ban-types
-  const component: DefineComponent<{}, {}, any>
+// defineComponent函数的返回值类型本身是包含install属性的，这种做法更直观且更贴合组件本身的类型
+declare module '*.vue' {
+  import { defineComponent } from 'vue'
+  const component: ReturnType<typeof defineComponent>
   export default component
 }
 

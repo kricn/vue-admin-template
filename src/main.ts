@@ -14,6 +14,8 @@ import "./styles/index.scss";
 // 工具方法
 import ripple from './utils/ripple';
 
+import FormComponents from '@/components/index'
+
 const app = createApp(App);
 
 // 全局组件
@@ -29,4 +31,4 @@ app.directive("ripple", {
     });
   },
 });
-app.use(router).use(ElementUi).mount("#app");
+app.use(router).use(ElementUi).use(FormComponents).mount("#app");

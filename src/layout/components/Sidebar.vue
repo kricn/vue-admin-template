@@ -9,7 +9,7 @@
           </router-link>
         </div>
       </transition>
-      <Menu :mergeOnlyOneChild="false" :onlyMergeFirst="false" />
+      <Menu :mergeOnlyOneChild="true" :onlyMergeFirst="true" />
     </el-scrollbar>
   </div>
 </template>

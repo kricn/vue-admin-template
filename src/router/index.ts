@@ -69,6 +69,20 @@ const add: Array<RouteItem> = [
       }
     ],
   },
+  {
+    path: "/pages",
+    name: "page1",
+    component: Layout,
+    redirect: '/page-1',
+    meta: { title: "页面1", icon: "home" },
+    children: [
+      {
+        path: "/page-1",
+        meta: { title: "页面1", icon: "guide" },
+        component: () => import("../views/page-1.vue"),
+      }
+    ],
+  },
 ];
 
 /**
