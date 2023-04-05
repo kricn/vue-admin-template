@@ -31,6 +31,13 @@ const base: Array<RouteItem> = [
     component: () => import("../views/page-401.vue"),
     meta: { hidden: true, title: "暂无权限访问" },
   },
+  
+  {
+    path: "/page-1",
+    name: "page1",
+    meta: { title: "页面1", icon: "guide" },
+    component: () => import("../views/page-1.vue"),
+  },
 ];
 
 /** 图标路由对象 */
@@ -68,21 +75,7 @@ const add: Array<RouteItem> = [
         component: () => import("../views/home.vue"),
       }
     ],
-  },
-  {
-    path: "/pages",
-    name: "page1",
-    component: Layout,
-    redirect: '/page-1',
-    meta: { title: "页面1", icon: "home" },
-    children: [
-      {
-        path: "/page-1",
-        meta: { title: "页面1", icon: "guide" },
-        component: () => import("../views/page-1.vue"),
-      }
-    ],
-  },
+  }
 ];
 
 /**

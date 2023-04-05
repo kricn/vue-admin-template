@@ -1,10 +1,12 @@
 <template>
   <div class="form-design-aside">
-    <ul class="list flex">
-      <li class="item" v-for="(item, key) in components" :key="key" @click="onSelect(key)">
-        {{ item.name }}
-      </li>
-    </ul>
+    <el-scrollbar>
+      <ul class="list flex">
+        <li class="item" v-for="(item, key) in components" :key="key" @click="onSelect(key)">
+          {{ item.name }}
+        </li>
+      </ul>
+    </el-scrollbar>
   </div>
 </template>
 <script setup lang="ts">
@@ -21,12 +23,20 @@ function onSelect(name: FormDesignInfo.ComponentsKey) {
 <style lang="scss" scoped>
 .form-design-aside {
   .list {
+    padding: 20px 10px;
+    display: flex;
+    column-gap: 10px;
+    row-gap: 10px;
     .item {
       width: 100px;
       border: 1px solid #dedecd;
       text-align: center;
       padding: 10px 0;
       cursor: pointer;
+      border-radius: 10px;
+      &:hover {
+        border-color: var(--blue);
+      }
     }
   }
 }

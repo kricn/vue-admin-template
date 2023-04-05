@@ -17,16 +17,11 @@ const defaultplaceholder: {
 
 /** 初始化表单数据 */
 export function useFormInfo(name: FormDesignInfo.ComponentsKey='FormInput'): FormDesignInfo.FormItem {
-  const label = defaultLabel[name || 'FormInput']
-  const sameNameCount = FormInfo.formItems.value.reduce((total, item) => {
-    if (item.name === name) total += 1
-    return total
-  }, 1)
+  const defaultKey = Date.now().toString(36)
   return {
-    label: label + sameNameCount,
     name: name || '',
-    key: '',
-    itemId: Date.now().toString(36),
+    key: defaultKey,
+    itemId: defaultKey,
     value: '',
     widget: useWidget(name)
   }
@@ -34,7 +29,13 @@ export function useFormInfo(name: FormDesignInfo.ComponentsKey='FormInput'): For
 
 /** 初始化配置项 */
 export function useBaseWidget(name: FormDesignInfo.ComponentsKey='FormInput'): FormDesignInfo.Widget {
+  const label = defaultLabel[name || 'FormInput']
+  const sameNameCount = FormInfo.formItems.value.reduce((total, item) => {
+    if (item.name === name) total += 1
+    return total
+  }, 1)
   return {
+    label: label + sameNameCount,
     rules: [],
     status: 'normal',
     placeholder: defaultplaceholder[name]

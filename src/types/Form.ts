@@ -6,8 +6,6 @@ export namespace FormDesignInfo {
   export type ComponentsKey = keyof typeof components
 
   export interface FormItem {
-    /** 表单项标题 */
-    label: string,
     /** 类型，组件名称 */
     name: string
     /** 组件 key，唯一字段，不可有两个同名字段 */
@@ -21,6 +19,8 @@ export namespace FormDesignInfo {
   }
 
   interface BaseWidget {
+    /** 表单项标题 */
+    label: string,
     /** 组件校验规则 */
     rules?: Array<RuleItem>
     /** 组件状态 */

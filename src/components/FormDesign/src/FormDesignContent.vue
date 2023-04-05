@@ -1,16 +1,18 @@
 <template>
   <div class="form-design-content">
-    <el-form :model="formData" :rules="formRules" class="design-form">
-      <template :key="item.itemId" v-for="item in formItems">
-        <el-form-item 
-          :label="item.label" 
-          :class="['design-form-item', item.itemId === selectedFormItem?.itemId ? 'design-form-item__active' : '']"
-          @click="onFormItemClick(item)"
-        >
-          <component :is="item.name" v-bind="item.widget" v-model:value="item.value" />
-        </el-form-item>
-      </template>
-    </el-form>
+    <el-scrollbar>
+      <el-form :model="formData" :rules="formRules" class="design-form">
+        <template :key="item.itemId" v-for="item in formItems">
+          <el-form-item 
+            :label="item.widget.label" 
+            :class="['design-form-item', item.itemId === selectedFormItem?.itemId ? 'design-form-item__active' : '']"
+            @click="onFormItemClick(item)"
+          >
+            <component :is="item.name" v-bind="item.widget" v-model:value="item.value" />
+          </el-form-item>
+        </template>
+      </el-form>
+    </el-scrollbar>
   </div>
 </template>
 <script lang="ts" setup>
@@ -34,10 +36,12 @@ const onFormItemClick = (item: FormDesignInfo.FormItem) => {
 <style lang="scss" scoped>
 .form-design-content {
   .design-form {
+    padding: 20px 10px;
     .design-form-item {
       border: 1px solid transparent;
       padding: 5px 10px 20px;
       cursor: pointer;
+      border-radius: 10px;
       &.design-form-item__active {
         border-color: var(--blue);
       }

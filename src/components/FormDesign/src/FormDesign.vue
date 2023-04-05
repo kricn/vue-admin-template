@@ -9,33 +9,26 @@
 import FormDesignAside from './FormDesignAside.vue';
 import FormDesignContent from './FormDesignContent.vue';
 import FormDesignConfig from './FormDesignConfig.vue';
-import { watch } from 'vue';
-import FormInfo from '@/store/FormInfo';
-
-const props = defineProps({
-  model: {
-    type: Object,
-    default: () => ({})
-  }
-})
-
-watch(() => props.model, (val) => {
-  FormInfo.formData = Object.assign(FormInfo.formData, val)
-}, { deep: true })
 
 </script>
 <style lang="scss" scoped>
 .form-design {
   display: flex;
   width: 100%;
+  height: calc(100vh - 70px);
   .form-design-aside {
     width: 20%;
+    
   }
   .form-design-content {
     flex: 1;
+    border-right: 1px solid #f0f0f0;
+    border-left: 1px solid #f0f0f0;
+    
   }
   .form-design-config {
     width: 20%;
+    
   }
 }
 </style>
