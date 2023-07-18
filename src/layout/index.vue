@@ -6,11 +6,9 @@
       <!-- class="the-layout-page" -->
       <router-view class="the-layout-page" v-slot="{ Component, route }">
         <transition name="fadeSlideX" mode="out-in">
-          <!-- <main class="the-layout-page" :data-path="route.path" :key="route.path"> -->
           <keep-alive :include="cacheList">
             <component :is="Component" :key="route.path" />
           </keep-alive>
-          <!-- </main> -->
         </transition>
       </router-view>
     </div>
