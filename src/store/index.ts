@@ -9,9 +9,9 @@ class ModuleStore {
   /** 项目信息 */
   readonly projectInfo = {
     title: 'vue3 后台模板',
-    name: '业务中心后台管理平台',
+    name: 'vue3 后台模板',
     logo: '',
-    link: 'https://github.com/Hansen-hjs/vue-admin'
+    link: 'https://github.com/kricn/vue-admin-template'
   }
 
   get images() {

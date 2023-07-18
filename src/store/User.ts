@@ -1,5 +1,4 @@
-import { getToken } from '@/utils/authorization';
-import { reactive } from 'vue';
+import { reactive, ref } from 'vue';
 import { UserInfo } from '../types/user';
 import { jsonParse, modifyData } from '../utils';
 
@@ -22,10 +21,21 @@ function useUserInfo(): Readonly<UserInfo> {
  */
 export default class ModuleUser {
   constructor() {
+    // 初始化时先读取缓存
+    const userInfo = jsonParse(sessionStorage.getItem(cacheName), {})
+    if (userInfo.id) {
+      this.update(userInfo)
+    }
   }
 
   /** 用户信息（包含登录状态） */
   readonly info = reactive(useUserInfo());
+
+  /** 
+   * 是否正在加载用户信息
+   * vue2 版本中则不能单独使用变量来定义，要通过对象承载
+   * */
+  loading = ref(false)
 
   /**
    * 更新（设置）当前的用户信息并缓存到本地

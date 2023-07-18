@@ -59,6 +59,25 @@ export function initPermission(vueRouter: Router, baseRoutes: Array<RouteItem>, 
 
     const token = getToken();
     if (token) {
+      // 判断是否有缓存有用户信息
+      if (!Global.user.info.id && Global.user.info.token !== token) {
+        Global.user.loading.value = true
+        new Promise<void>(() => {
+          setTimeout(() => {
+            Global.user.update({
+              id: Date.now() + Math.random().toString(36).substring(2),
+              phone: '13800000000',
+              avatar: '',
+              sex: 1,
+              username: 'kricn',
+              token: '',
+              roleList: ['超级管理员'],
+            })
+            Global.user.loading.value = false
+            next()
+          }, 1500);
+        })
+      }
       if (Global.layout.privateRouters.length > 0) {
         next();
       } else {
@@ -68,11 +87,7 @@ export function initPermission(vueRouter: Router, baseRoutes: Array<RouteItem>, 
           const item = Global.layout.privateRouters[i];
           router.addRoute(item);
         }
-        // vue 3.x 之后路由取消了自动匹配，要手动设置匹配方式
-        // learn https://my.oschina.net/qinghuo111/blog/4832051
         if (!router.hasRoute(redirectRouteName)) {
-          // router.addRoute({ path: "/:catchAll(.*)", name: redirectRouteName, redirect: "/404" });
-          // 不重定向到`/404`
           router.addRoute({ ...baseRoutes[1], path: "/:catchAll(.*)", name: redirectRouteName });
         }
 
